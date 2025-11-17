@@ -8,7 +8,7 @@
 /bundle
 
 # Hardhat Build Artifacts
-/artifacts
+# /artifacts
 
 # Hardhat compilation (v2) support directory
 /cache
