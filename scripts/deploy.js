@@ -53,10 +53,18 @@ async function main() {
   );
 
   const contract = await factory.deploy();
+  const deployTx = contract.deploymentTransaction();
   await contract.waitForDeployment();
+  const rcpt = deployTx ? await deployTx.wait() : null;
 
   const address = await contract.getAddress();
+  const txHash = deployTx?.hash;
+  const blockNumber = rcpt?.blockNumber;
+
   console.log("DEPLOYED_ADDRESS:", address);
+  if (txHash) console.log("DEPLOY_TX_HASH:", txHash);
+  if (blockNumber !== undefined) console.log("DEPLOY_BLOCK:", blockNumber);
+  console.log("RESULT:", JSON.stringify({ address, txHash, blockNumber }));
 }
 
 main().catch(console.error);
