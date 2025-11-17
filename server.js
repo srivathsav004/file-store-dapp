@@ -14,6 +14,11 @@ app.use(cors());
 app.use("/api", deployRouter);
 app.use("/api", filesRouter);
 
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
+});
+
 async function ensureArtifacts() {
   const artifactPath = "./artifacts/contracts/FileRegistry.sol/FileRegistry.json";
   if (fs.existsSync(artifactPath)) {

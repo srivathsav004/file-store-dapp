@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: file-store-dapp
+    env: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm ci && npx hardhat compile
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+
+cronJobs:
+  - name: keep-alive-health-ping
+    schedule: "*/10 * * * *"
+    command: curl -sSf "$HEALTH_PING_URL" || true
+    envVars:
+      - key: HEALTH_PING_URL
+        value: https://file-store-dapp.onrender.com/health
