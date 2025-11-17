@@ -16,10 +16,9 @@ The server shells out to CLI scripts (ethers v6) for signing and sending transac
   - `MST_TESTNET_RPC` – MST Testnet RPC URL
   - `PORT` – Optional, defaults to `3000`
 
-- Install deps
+- Install dependencies
   ```bash
   npm i
-  npm i multer axios form-data
   ```
 
 - Build contract (ensure artifacts exist)
@@ -115,7 +114,7 @@ Upload a file to Pinata IPFS and store its gateway URL on-chain via `storeFile(u
 
 ## Logs & Limits
 - Structured logs printed by the server for both endpoints.
-- Upload size limit defaults to 50 MB (see `apis/files.js`).
+- Upload size limit defaults to 5 MB (see `apis/files.js`).
 
 ## Notes
 - Artifacts expected at `artifacts/contracts/FileRegistry.sol/FileRegistry.json`.

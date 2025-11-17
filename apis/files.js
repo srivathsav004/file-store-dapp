@@ -5,7 +5,7 @@ import FormData from "form-data";
 import { exec } from "child_process";
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 50 * 1024 * 1024 } });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
 const EXPLORER_TX_BASE = {
   1: "https://amoy.polygonscan.com/tx/",
