@@ -1,19 +1,21 @@
-services:
-  - type: web
-    name: file-store-dapp
-    env: node
-    plan: free
-    autoDeploy: true
-    buildCommand: npm ci && npx hardhat compile
-    startCommand: node server.js
-    envVars:
-      - key: NODE_VERSION
-        value: 18
+name: Keep Render file-store-dapp Awake
 
-cronJobs:
-  - name: keep-alive-health-ping
-    schedule: "*/10 * * * *"
-    command: curl -sSf "$HEALTH_PING_URL" || true
-    envVars:
-      - key: HEALTH_PING_URL
-        value: https://file-store-dapp.onrender.com/health
+on:
+  schedule:
+    - cron: "*/10 * * * *"     # every 10 minutes
+  workflow_dispatch:            # manual trigger option
+
+jobs:
+  ping-render-service:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping file-store-dapp Health Endpoint
+        run: |
+          URL="https://file-store-dapp.onrender.com/health"
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+          echo "Pinged $URL — Response code: $RESPONSE"
+
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "Warning: Service returned non-200 response."
+          fi
